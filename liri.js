@@ -102,24 +102,29 @@ console.log("Hello, I'm Liri.");
 
 			 //Shows up to last 20 tweets when created in terminal.
 			client.get('statuses/user_timeline', params, function(error, data, response){
-			if(!error) {
-	  		console.log(' ');
-       		console.log('================ My Tweets ================');
-         	data.forEach(function(obj) {
-       	 	console.log('--------------------------');
-         	console.log('Time: ' + obj.created_at);
-         	console.log('Tweet: ' + obj.text);
-         	console.log('--------------------------');
-         	console.log(' ');
-        	});
+				if(!error) {
+			  		console.log(' ');
+		       		console.log('================ My Tweets ================');
+		         	
+		         	data.forEach(function(obj) {
+			       	 	console.log('--------------------------');
+			         	console.log('Time: ' + obj.created_at);
+			         	console.log('Tweet: ' + obj.text);
+			         	console.log('--------------------------');
+			         	console.log(' ');
 
-        	console.log('===========================================');
-        	console.log(' ');
-        	}else{console.log("Twitter User Not Found or No Tweets to show")}
+			         	fs.appendFile('log.txt', 'Time:' + obj.created_at);
+	        			fs.appendFile('log.txt', 'Tweet:' + obj.text);
+		        	
+		        	});
 
-        	//fs.appendFile('log.txt', 'Time:' + obj.created_at);
-        	//fs.appendFile('log.txt', 'Tweet:' + obj.text); 
+		        	console.log('===========================================');
+		        	console.log(' ');
+        		}else{
+        			console.log("Twitter User Not Found or No Tweets to show")
+        		}
 
+	        	 
      		});
 
  		};
@@ -157,19 +162,18 @@ console.log("Hello, I'm Liri.");
 		console.log("Spotify Preview URL: " + data.tracks.items[0].preview_url)
 		console.log("Album Name: " + data.tracks.items[0].album.name);
 
-		fs.appendFile ('log.txt', "Artist(s): " + artist);
+		//fs.appendFile ('log.txt', "Artist(s): " + artist);
 					
 				});
 			};
 		})
 
 //============================================================================================
-	function myMovies(){
+	function myMovies(userSelection){
 
- 	var movieTitle; 
 	
 
-		var queryURL = 'http://www.omdbapi.com/?t='+ movieTitle + '&y=&plot=short&tomatoes=true&r=json'; 
+		var queryURL = 'http://www.omdbapi.com/?t='+ userSelection.movie + '&y=&plot=short&tomatoes=true&r=json'; 
 		request(queryURL, function (error, response, body){
 	
 
@@ -177,7 +181,7 @@ console.log("Hello, I'm Liri.");
 
 		//Parses the body of the side and recovers movie info.
 		var movie = JSON.parse(body); 
-		console.log(movie);
+	
 
 		//Prints out movie info. 
 		console.log("Movie Title: " + movie.Title);

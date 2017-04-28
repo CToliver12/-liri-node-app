@@ -112,14 +112,15 @@ console.log("Hello, I'm Liri.");
 			         	console.log('Tweet: ' + obj.text);
 			         	console.log('--------------------------');
 			         	console.log(' ');
+			         	console.log('===========================================');
+		        		console.log(' ');
 
 			         	fs.appendFile('log.txt', 'Time:' + obj.created_at);
 	        			fs.appendFile('log.txt', 'Tweet:' + obj.text);
 		        	
 		        	});
 
-		        	console.log('===========================================');
-		        	console.log(' ');
+		        	
         		}else{
         			console.log("Twitter User Not Found or No Tweets to show")
         		}
@@ -137,10 +138,12 @@ console.log("Hello, I'm Liri.");
 			spotify.search({ 
 				type: 'track', 
 				query: userSelection.song,  
-			}, function(err,data) {
-				if (err) {
-			console.log('Error occured: ' + err);
-			return;
+			}, 
+
+				function(err,data) {
+					if (err) {
+						console.log('Error occured: ' + err);
+						return;
 		}
 
 		var artistsArray = data.tracks.items[0].album.artists;
